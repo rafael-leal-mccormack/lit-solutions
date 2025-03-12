@@ -3,9 +3,25 @@
       {
         "src": "/manifest.json",
         "headers": {
-          "Content-Type": "application/manifest+json"
+          "Content-Type": "application/manifest+json",
+          "Access-Control-Allow-Origin": "*"
         },
         "continue": true
+      }
+    ],
+    "headers": [
+      {
+        "source": "/manifest.json",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/manifest+json"
+          },
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          }
+        ]
       }
     ]
   }
