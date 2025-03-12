@@ -9,7 +9,7 @@ interface EmailData {
 }
 
 export async function sendEmail(data: EmailData) {
-  const resend = new Resend(process.env.RESEND_API_KEY);
+  const resend = new Resend(process.env.REACT_APP_RESEND_API_KEY);
 
   try {
     const { data: responseData, error } = await resend.emails.send({
