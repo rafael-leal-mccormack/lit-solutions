@@ -6,7 +6,7 @@ const Hero: React.FC = () => {
     <section className="relative h-screen flex items-center justify-center px-4 bg-[#FEFBF6]">
       <div className="max-w-6xl mx-auto text-center">
         <motion.div>
-          <img src="lit.png" alt="Lit Solutions" className="w-[280px] h-[280px] mx-auto" />
+          <img src="logo.png" alt="Lit Solutions" className="w-[280px] h-[280px] mx-auto" />
         </motion.div>
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
