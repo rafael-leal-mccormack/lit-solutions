@@ -11,7 +11,6 @@ const Contact: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(process.env.REACT_APP_RESEND_API_KEY);
     const resend = new Resend(process.env.REACT_APP_RESEND_API_KEY);
 
     try {

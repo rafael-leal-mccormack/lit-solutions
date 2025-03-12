@@ -9,7 +9,7 @@ const Hero: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          src="/lit-logo.png"
+          src="lit.png"
           alt="Lit Solutions"
           className="w-[280px] h-[280px] mx-auto"
         />
