@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import { motion } from 'framer-motion';
 
@@ -71,9 +72,9 @@ const Projects: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="group relative overflow-hidden rounded-xl bg-[#110043]/5"
+              className="group relative overflow-hidden rounded-xl bg-[#110043]/5 h-[400px]"
             >
-              <div className="aspect-w-16 aspect-h-9">
+              <div className="h-full w-full">
                 <img
                   src={project.image}
                   alt={project.title}

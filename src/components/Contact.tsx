@@ -1,6 +1,7 @@
+'use client'
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Resend } from "resend";
+import { sendEmail } from "@/actions/email";
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -8,37 +9,25 @@ const Contact: React.FC = () => {
     email: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const resend = new Resend(process.env.REACT_APP_RESEND_API_KEY);
+    setIsSubmitting(true);
 
     try {
-      const { data, error } = await resend.emails.send({
-        from: "Resend <onboarding@resend.dev>",
-        to: ["litsolutions305@gmail.com"],
-        subject: "New message from " + formData.name,
-        html: `
-          <h2>New Contact Form Submission</h2>
-          <p><strong>Name:</strong> ${formData.name}</p>
-          <p><strong>Email:</strong> ${formData.email}</p>
-          <p><strong>Message:</strong></p>
-          <p>${formData.message}</p>
-        `,
-      });
+      const result = await sendEmail(formData);
 
-      if (error) {
-        console.error('Error sending email:', error);
-        alert('Failed to send message. Please try again.');
-        return;
+      if (result.success) {
+        alert('Message sent successfully!');
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        alert(result.error || 'Failed to send message. Please try again.');
       }
-
-      console.log('Email sent successfully:', data);
-      alert('Message sent successfully!');
-      setFormData({ name: "", email: "", message: "" });
     } catch (err) {
-      console.error('Error:', err);
       alert('Failed to send message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -139,9 +128,10 @@ const Contact: React.FC = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             type="submit"
-            className="w-full bg-[#110043] text-[#FEFBF6] py-3 px-6 rounded-lg font-semibold hover:bg-[#110043]/90 transition-colors duration-300"
+            disabled={isSubmitting}
+            className="w-full bg-[#110043] text-[#FEFBF6] py-3 px-6 rounded-lg font-semibold hover:bg-[#110043]/90 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Send Message
+            {isSubmitting ? 'Sending...' : 'Send Message'}
           </motion.button>
         </motion.form>
       </div>
