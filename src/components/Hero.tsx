@@ -5,9 +5,14 @@ const Hero: React.FC = () => {
   return (
     <section className="relative h-screen flex items-center justify-center px-4 bg-[#FEFBF6]">
       <div className="max-w-6xl mx-auto text-center">
-        <motion.div>
-          <img src="logo.png" alt="Lit Solutions" className="w-[280px] h-[280px] mx-auto" />
-        </motion.div>
+        <motion.img
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          src="logo.png"
+          alt="Lit Solutions"
+          className="w-[280px] h-[280px] mx-auto"
+        />
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
