@@ -4,6 +4,20 @@ import { motion } from 'framer-motion';
 
 const projects = [
   {
+    title: "Saltly AI",
+    description: "AI-powered restaurant assistant with chat, voice, and email support for menu help and customer service",
+    tech: ['NextJs', 'Supabase', 'OpenAI', 'Twilio'],
+    image: 'saltly-icon.png',
+    link: 'https://saltly.ai'
+  },
+  {
+    title: "Kurzo",
+    description: "Online course platform empowering creators to teach what they know",
+    tech: ['NextJs', 'Stripe', 'Supabase'],
+    image: 'kurzo.png',
+    link: 'https://www.kurzo.com/'
+  },
+  {
     title: 'Solana Community Game',
     description: 'A community-driven game on the Solana blockchain',
     tech: ['NextJs', 'Solana', 'Postgres'],
