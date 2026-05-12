@@ -1,4 +1,5 @@
 import '@/styles/globals.css';
+import { Analytics } from '@vercel/analytics/next';
 import type { Metadata } from 'next';
 import { Roboto, Roboto_Condensed, Instrument_Serif } from 'next/font/google';
 
@@ -143,6 +144,7 @@ export default function RootLayout({
       <body>
         <JsonLd />
         {children}
+        <Analytics />
       </body>
     </html>
   );
