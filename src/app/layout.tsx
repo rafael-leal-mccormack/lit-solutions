@@ -1,5 +1,6 @@
 import '@/styles/globals.css';
 import { Analytics } from '@vercel/analytics/next';
+import { PostHogProvider } from '@/components/PostHogProvider';
 import type { Metadata } from 'next';
 import { Roboto, Roboto_Condensed, Instrument_Serif } from 'next/font/google';
 
@@ -143,7 +144,9 @@ export default function RootLayout({
     <html lang="en" className={`${roboto.variable} ${robotoCondensed.variable} ${instrumentSerif.variable}`}>
       <body>
         <JsonLd />
-        {children}
+        <PostHogProvider>
+          {children}
+        </PostHogProvider>
         <Analytics />
       </body>
     </html>

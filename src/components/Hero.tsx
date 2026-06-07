@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import posthog from 'posthog-js';
 
 const stats = [
   { num: '30+', label: 'Projects shipped' },
@@ -245,6 +246,7 @@ const Hero: React.FC = () => {
             >
               <a
                 href="mailto:rafael@litsolutions.dev"
+                onClick={() => posthog.capture('hero_cta_clicked', { cta: 'email' })}
                 className="inline-flex items-center gap-2 rounded-full no-underline transition-opacity hover:opacity-90 bg-flame text-white font-condensed text-xs font-bold py-[10px] px-5"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

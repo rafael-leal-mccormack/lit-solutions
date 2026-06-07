@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import posthog from 'posthog-js';
 
 type Filter = 'everything' | 'build' | 'integrate' | 'advise';
 
@@ -140,7 +141,10 @@ const Services: React.FC = () => {
               return (
                 <button
                   key={key}
-                  onClick={() => setFilter(key)}
+                  onClick={() => {
+                    posthog.capture('services_filter_changed', { filter: key });
+                    setFilter(key);
+                  }}
                   className={`text-xs px-3 py-1.5 rounded-full transition-colors font-condensed ${
                     active
                       ? 'bg-ink text-cream border-0'
@@ -197,6 +201,10 @@ const Services: React.FC = () => {
               <div className="pt-3 mt-auto border-t border-ink/[8%]">
                 <button
                   onClick={() => {
+                    posthog.capture('service_inquired', {
+                      service: service.title,
+                      service_tag: service.tag,
+                    });
                     sessionStorage.setItem('prefillService', service.title);
                     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
                   }}

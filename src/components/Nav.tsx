@@ -1,6 +1,7 @@
 'use client'
 import React from 'react';
 import Image from 'next/image';
+import posthog from 'posthog-js';
 
 const Nav: React.FC = () => {
   return (
@@ -35,6 +36,7 @@ const Nav: React.FC = () => {
         {/* CTA pill */}
         <a
           href="mailto:rafael@litsolutions.dev"
+          onClick={() => posthog.capture('nav_get_quote_clicked')}
           className="no-underline text-white rounded-full transition-opacity hover:opacity-90 bg-flame font-condensed text-xs font-bold py-[7px] px-[18px]"
         >
           Get a quote

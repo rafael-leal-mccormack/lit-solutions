@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import posthog from 'posthog-js';
 
 const faqs = [
   {
@@ -50,7 +51,13 @@ const FAQ: React.FC = () => {
                 className={`border-t border-ink/10${i === faqs.length - 1 ? ' border-b' : ''}`}
               >
                 <button
-                  onClick={() => setOpen(open === i ? -1 : i)}
+                  onClick={() => {
+                    const isOpening = open !== i;
+                    if (isOpening) {
+                      posthog.capture('faq_question_expanded', { question: faq.q, index: i });
+                    }
+                    setOpen(open === i ? -1 : i);
+                  }}
                   className="w-full flex items-center justify-between py-5 text-left"
                 >
                   <span className="font-sans text-[15px] font-semibold text-ink pr-4">

@@ -1,6 +1,7 @@
 'use client'
 import React from 'react';
 import { motion } from 'framer-motion';
+import posthog from 'posthog-js';
 
 const tiers = [
   {
@@ -98,6 +99,11 @@ const Pricing: React.FC = () => {
 
               <button
                 onClick={() => {
+                  posthog.capture('pricing_tier_inquired', {
+                    tier: tier.name,
+                    tier_tag: tier.tag,
+                    is_highlighted: tier.highlighted,
+                  });
                   sessionStorage.setItem('prefillService', tier.name);
                   document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
                 }}

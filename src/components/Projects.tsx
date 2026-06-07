@@ -2,6 +2,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import posthog from 'posthog-js';
 
 const projects = [
   {
@@ -95,6 +96,11 @@ const Projects: React.FC = () => {
               href={project.link}
               target="_blank"
               rel="noreferrer"
+              onClick={() => posthog.capture('project_link_clicked', {
+                project: project.title,
+                link: project.link,
+                tech: project.tech,
+              })}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: index * 0.07 }}

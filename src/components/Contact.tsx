@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import posthog from 'posthog-js';
 import { sendEmail } from '@/actions/email';
 
 const Contact: React.FC = () => {
@@ -26,12 +27,20 @@ const Contact: React.FC = () => {
     try {
       const result = await sendEmail(formData);
       if (result.success) {
+        posthog.capture('contact_form_submitted', {
+          has_prefilled_service: !!formData.message.match(/I'm interested in your .+ service/),
+        });
         setSubmitted(true);
         setFormData({ name: '', email: '', message: '' });
       } else {
+        posthog.capture('contact_form_failed', {
+          error: result.error || 'unknown',
+        });
         alert(result.error || 'Failed to send. Please try again.');
       }
-    } catch {
+    } catch (err) {
+      posthog.captureException(err);
+      posthog.capture('contact_form_failed', { error: 'exception' });
       alert('Failed to send. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -40,6 +49,13 @@ const Contact: React.FC = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    posthog.capture('contact_form_field_blur', {
+      field: e.target.name,
+      filled: e.target.value.trim().length > 0,
+    });
   };
 
   return (
@@ -136,6 +152,7 @@ const Contact: React.FC = () => {
                       name={field.id}
                       value={formData[field.id as 'name' | 'email']}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                       required
                       placeholder={field.placeholder}
                       className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-colors bg-cream/[7%] border border-cream/[12%] text-cream placeholder:text-cream/30"
@@ -155,6 +172,7 @@ const Contact: React.FC = () => {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     required
                     rows={5}
                     placeholder="Tell us about your project..."
